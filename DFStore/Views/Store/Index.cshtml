@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DFStore.Models.Category>
+
+@{
+    ViewBag.Title = "Main Store";
+}
+
+<h2>Browse Products by Category:</h2>
+
+<ul>
+    @foreach (var category in Model)
+    {
+        <li>@Html.ActionLink(category.CategoryName, "Browse", new { category = category.CategoryName })</li>
+    }
+
+</ul>
