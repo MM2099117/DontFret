@@ -17,7 +17,7 @@ namespace DFStore.Models
         public string Add2 { get; set; }
         public string Postcode { get; set; }
         public string Town { get; set; }
-        public int ContactNumber { get; set; }
+        public string ContactNumber { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -27,5 +27,6 @@ namespace DFStore.Models
             // Add custom user claims here
             return userIdentity;
         }
+
     }
 }

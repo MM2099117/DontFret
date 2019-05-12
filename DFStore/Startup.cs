@@ -1,8 +1,6 @@
-﻿using Microsoft.Owin;
-using Owin;
+﻿using Owin;
 
-[assembly: OwinStartupAttribute(typeof(DFStore.Startup))]
-namespace DFStore
+namespace IdentitySample
 {
     public partial class Startup
     {

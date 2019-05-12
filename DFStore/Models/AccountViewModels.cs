@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DFStore.Models
+namespace IdentitySample.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
@@ -70,7 +70,7 @@ namespace DFStore.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -81,18 +81,21 @@ namespace DFStore.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [Display(Name = "Full Name")]
         public string FullName { get; set; }
         [Required]
+        [Display(Name = "Address Line 1")]
         public string Add1 { get; set; }
         [Required]
+        [Display(Name = "Address Line 2")]
         public string Add2 { get; set; }
         [Required]
         public string Postcode { get; set; }
         [Required]
         public string Town { get; set; }
         [Required]
-        [DataType(DataType.PhoneNumber)]
-        public int ContactNumber { get; set; }
+        [Display(Name = "Mobile Number")]
+        public string ContactNumber { get; set; }
 
     }
 

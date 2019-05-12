@@ -9,7 +9,7 @@ namespace DFStore.Controllers
 {
     public class StoreController : Controller
     {
-        DontFretDBContext db = new DontFretDBContext();
+        DontFretEntities db = new DontFretEntities();
 
         /// <summary>
         /// Controller Function for loading the main store page

@@ -12,7 +12,7 @@ namespace DFStore.Controllers
 {
     public class ProductController : Controller
     {
-        private DontFretDBContext db = new DontFretDBContext();
+        private DontFretEntities db = new DontFretEntities();
 
         // GET: Staff
         public ActionResult Index()
