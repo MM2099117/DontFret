@@ -11,12 +11,12 @@ namespace DFShop.Models
 {
     public class DontFretEntities : IdentityDbContext<ApplicationUser>
     {
-           public DontFretEntities()
-                : base("DontFretDB", throwIfV1Schema: false)
-            {
-            }
+           public DontFretEntities() : base("DontFretDB", throwIfV1Schema: false)
+           {
+    
+           }
 
-            public static DontFretEntities Create()
+        public static DontFretEntities Create()
             {
                 return new DontFretEntities();
             }
@@ -26,10 +26,11 @@ namespace DFShop.Models
         /// </summary>
         public IDbSet<Product> Products { get; set; }
         public IDbSet<Category> Categories { get; set; }
-
         public IDbSet<Supplier> Suppliers { get; set; }
+        public IDbSet<Order> Orders { get; set; }
+        public IDbSet<OrderDetail> OrderDetails { get; set; }
+        public IDbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-
-
+        public System.Data.Entity.DbSet<DFShop.Models.CartViewModel> CartViewModels { get; set; }
     }
 }

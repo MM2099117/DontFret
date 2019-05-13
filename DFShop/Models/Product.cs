@@ -17,19 +17,19 @@ namespace DFShop.Models
         [ScaffoldColumn(false)]
         public int ProductID { get; set; }
 
+        [DisplayName("Product Name")]
+        [Required(ErrorMessage = "Please enter a product name")]
         public string ProductName { get; set; }
 
         [DisplayName("Category")]
         public int CategoryID { get; set; }
+
         public virtual Category Category { get; set; }
 
         [DisplayName("Supplier")]
         public int SupplierID { get; set; }
-        public Supplier Supplier { get; set; }
 
-        [Required(ErrorMessage = "Please enter a product name")]
-        [StringLength(150)]
-        public string Title { get; set; }
+        public virtual Supplier Supplier { get; set; }
 
         [Required(ErrorMessage = "Please enter a product price")]
         public decimal Price { get; set; }

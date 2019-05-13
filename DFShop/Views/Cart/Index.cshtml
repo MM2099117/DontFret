@@ -1,0 +1,83 @@
+﻿@model DFShop.Models.CartViewModel
+
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+<script src="/Scripts/jquery-1.4.4.min.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        // Document.ready -> link up remove event handler
+        $(".RemoveLink").click(function () {
+            // Get the id from the link
+            var recordToDelete = $(this).attr("data-id");
+            if (recordToDelete != '') {
+                // Perform the ajax post
+                $.post("/Cart/RemoveEntry", {"EntryID": recordToDelete },
+                    function (data) {
+                        // Successful requests get here
+                        // Update the page elements
+                        if (data.entryCount == 0) {
+                            $('#row-' + data.DeleteId).fadeOut('slow');
+                        } else {
+                            $('#entry-count-' + data.DeleteId).text(data.entryCount);
+                        }
+                        $('#cart-total').text(data.ShoppingCartTotal);
+                        $('#update-message').text(data.ConfirmationMessage);
+                        $('#cart-status').text('Cart (' + data.CartEntriesCount + ')');
+                    });
+            }
+        });
+    });
+</script>
+<h3>
+    <em>Review</em> your cart:
+</h3>
+<div id="update-message">
+</div>
+<table  style="width: 100%" border="1">
+    <tr>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Unit Price:
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var entry in Model.CartEntries)
+    {
+        <tr id="row-@entry.EntryID">
+            <td>
+                @Html.ActionLink(entry.Product.ProductName,
+"Details", "Store", new { id = entry.ProductID }, null)
+            </td>
+            <td>
+                @entry.Product.Price
+            </td>
+            <td id="entry-count-@entry.EntryID">
+                @entry.Count
+            </td>
+            <td>
+                <a href="#" class="RemoveLink"
+                   data-id="@entry.EntryID">
+                    Remove
+                    from cart
+                </a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            Total
+        </td>
+        <td></td>
+        <td></td>
+        <td id="cart-total">
+            @Model.ShoppingCartTotal
+        </td>
+    </tr>
+</table>

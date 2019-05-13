@@ -6,4 +6,27 @@
 }
 
 <h2>@Model.ProductName</h2>
+<p>
+    <img alt="@Model.ProductName"
+         src="@Model.ImagePath" />
+</p>
+<div id="item-details">
+    <p>
+        <em>Category:</em>
+        @Model.Category.CategoryName
+    </p>
+    <p>
+        <em>Supplier:</em>
+        @Model.Supplier.SupplierName
+    </p>
+    <p>
+        <em>Price:</em>
+        @String.Format("{0:F}", Model.Price)
+    </p>
+    <p class="button1">
+        @Html.ActionLink("Add To Cart", "AddToCart",
+        "Cart", new { productID = Model.ProductID }, "")
+    </p>
+    <div class="fb-comments" data-width="230" data-numposts="5"></div>
+</div>
 
