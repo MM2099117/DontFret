@@ -16,6 +16,7 @@ namespace DFShop.Models
         public string ShoppingCartID { get; set; }
         public int ProductID { get; set; }
         public virtual Product Product{ get; set; }
+        public int ProductQuantity { get; set; }
         public int Count { get; set; }
         public DateTime DateCreated { get; set; }
 

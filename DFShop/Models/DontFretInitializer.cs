@@ -9,6 +9,20 @@ namespace DFShop.Models
     {
         protected override void Seed(DontFretEntities context)
         {
+            if (!context.Users.Any())
+            {
+                var Admin = new ApplicationUser()
+                {
+                    FullName = "Admin",
+                    Add1 = "Dont Fret Music",
+                    Add2 = "111 High Street",
+                    Town = "Townsville",
+                    Postcode = "G3 8PR",
+                    ContactNumber = "0141 435 8999"
+
+                };
+
+            }
 
             var categories = new List<Category>
             {
@@ -42,10 +56,10 @@ namespace DFShop.Models
 
             new List<Product>
             {
-                new Product { ProductName = "Gibson Electric 1998", Category = categories.Single(g => g.CategoryName == "Electric"), Price = 1299.99M, Supplier = Suppliers.Single(a => a.SupplierName == "Gibson"), ImagePath = "/Content/img/image1.jpg" },
-                new Product { ProductName = "Martin Acoustic 2018", Category = categories.Single(g => g.CategoryName == "Acoustic"), Price = 346.99M, Supplier = Suppliers.Single(a => a.SupplierName == "Martin"), ImagePath = "/Content/img/image2.jpg" },
-                new Product { ProductName = "Fender Carbon Nylon Plectrums", Category = categories.Single(g=> g.CategoryName == "Accessories"), Price = 8.99M, Supplier = Suppliers.Single(a=>a.SupplierName == "Fender"), ImagePath = "/Content/img/image5.jpg" },
-                new Product { ProductName = "VTL Amp Classic", Category = categories.Single(g=> g.CategoryName == "Amplifiers"), Price = 400.00M, Supplier = Suppliers.Single(a=>a.SupplierName == "VTL"), ImagePath = "/Content/img/image4.jpg" }
+                new Product { ProductName = "Gibson Electric 1998", Category = categories.Single(g => g.CategoryName == "Electric"), Price = 1299.99M, Supplier = Suppliers.Single(a => a.SupplierName == "Gibson"), ImagePath = "/Content/img/image1.jpg", StockLevel = 10 },
+                new Product { ProductName = "Martin Acoustic 2018", Category = categories.Single(g => g.CategoryName == "Acoustic"), Price = 346.99M, Supplier = Suppliers.Single(a => a.SupplierName == "Martin"), ImagePath = "/Content/img/image2.jpg", StockLevel =  8 },
+                new Product { ProductName = "Fender Carbon Nylon Plectrums", Category = categories.Single(g=> g.CategoryName == "Accessories"), Price = 8.99M, Supplier = Suppliers.Single(a=>a.SupplierName == "Fender"), ImagePath = "/Content/img/image5.jpg", StockLevel = 10  },
+                new Product { ProductName = "VTL Amp Classic", Category = categories.Single(g=> g.CategoryName == "Amplifiers"), Price = 400.00M, Supplier = Suppliers.Single(a=>a.SupplierName == "VTL"), ImagePath = "/Content/img/image4.jpg", StockLevel = 250 }
             }.ForEach(a => context.Products.Add(a));
             context.SaveChanges();
 

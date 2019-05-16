@@ -37,6 +37,7 @@ namespace DFShop.Controllers
         public ActionResult AddToCart(int productID)
         {
             var newEntry = db.Products.Single(p => p.ProductID == productID);
+            newEntry.StockLevel--;
 
             var cart = Cart.GetCart(this.HttpContext);
 
@@ -46,23 +47,27 @@ namespace DFShop.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult RemoveEntry(int entryID)
+        /// <summary>
+        /// POST: Remove cart entry
+        /// </summary>
+        /// <param name="entryID"></param>
+        /// <returns></returns>
+        public ActionResult RemoveEntry(int id)
         {
             var cart = Cart.GetCart(this.HttpContext);
 
-            string productName = db.ShoppingCarts.Single(s => s.EntryID == entryID).Product.ProductName;
+            string productName = db.ShoppingCarts.Single(s => s.EntryID == id).Product.ProductName;
 
-            int entryCount = cart.RemoveEntry(entryID);
+            int entryCount = cart.RemoveEntry(id);
 
             var results = new RemoveCartViewModel
             {
-                ConfirmationMessage = Server.HtmlEncode(productName) + " was successfully removed.",
-                ShoppingCartTotal = cart.GetCartTotal(),
-                CartEntriesCount = cart.GetCartCount(),
-                ProductCount = entryCount,
-                DeleteID = entryID
-
+                Message = Server.HtmlEncode(productName) +
+                              " has been removed from your shopping cart.",
+                CartTotal = cart.GetCartTotal(),
+                CartCount = cart.GetCartCount(),
+                ItemCount = entryCount,
+                DeleteId = id
             };
             return Json(results);
 

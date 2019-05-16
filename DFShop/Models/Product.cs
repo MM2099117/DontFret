@@ -37,6 +37,9 @@ namespace DFShop.Models
         [DisplayName("Item Image Location")]
         public string ImagePath { get; set; }
 
+        [DisplayName("Quantity")]
+        public int StockLevel { get; set; }
+
 
     }
 }

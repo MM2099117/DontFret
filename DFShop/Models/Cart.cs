@@ -114,7 +114,6 @@ namespace DFShop.Models
                 {
                     ///remove one from the entry count
                     CartEntries.Count--;
-
                     EntryCount = CartEntries.Count;
                 }
                 else
@@ -136,6 +135,7 @@ namespace DFShop.Models
         {
             ///gets the current Cart
             var CartEntries = db.ShoppingCarts.Where(c => c.ShoppingCartID == CartID);
+            
 
             ///iterates through the cart and removes all entries
             foreach (var entry in CartEntries)
