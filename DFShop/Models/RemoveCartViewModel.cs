@@ -9,8 +9,8 @@ namespace DFShop.Models
     {
         ///properties for deleting cart items
         public string Message { get; set; }
-        public decimal CartTotal { get; set; }
-        public int CartCount { get; set; }
+        public decimal ShoppingCartTotal { get; set; }
+        public int ShoppingCartCount { get; set; }
         public int ItemCount { get; set; }
         public int DeleteId { get; set; }
 

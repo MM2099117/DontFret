@@ -5,6 +5,8 @@ using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using System.IO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DFShop.Models
 {
@@ -15,6 +17,7 @@ namespace DFShop.Models
         /// Product properties
         /// </summary>
         [ScaffoldColumn(false)]
+        [Key]
         public int ProductID { get; set; }
 
         [DisplayName("Product Name")]
@@ -34,11 +37,18 @@ namespace DFShop.Models
         [Required(ErrorMessage = "Please enter a product price")]
         public decimal Price { get; set; }
 
-        [DisplayName("Item Image Location")]
+        [DisplayName("Upload Image")]
         public string ImagePath { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase ImageFile { get; set; }
 
         [DisplayName("Quantity")]
         public int StockLevel { get; set; }
+
+        public virtual List<OrderDetail> OrderDetails { get; set; }
+
+        public string ErrorMessage { get; set; }
 
 
     }

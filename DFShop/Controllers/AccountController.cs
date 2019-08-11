@@ -22,6 +22,18 @@ namespace DFShop.Controllers
         {
         }
 
+        /// <summary>
+        /// method to get the shopping cart and assign to the user's email
+        /// </summary>
+        /// <param name="Email"></param>
+        private void ManageShoppingCart(string Email)
+        {
+            var shoppingCart = Cart.GetCart(this.HttpContext);
+
+            shoppingCart.UpdateUserCart(Email);
+            Session[Cart.SessionKey] = Email;
+        }
+
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
@@ -79,6 +91,7 @@ namespace DFShop.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    ManageShoppingCart(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -156,7 +169,9 @@ namespace DFShop.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    ManageShoppingCart(model.Email);
+
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

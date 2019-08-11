@@ -18,6 +18,7 @@ namespace DFShop.Models
 
         public decimal ShoppingCartTotal { get; set; }
 
+        public string ErrorMessage { get; set; }
 
 
     }

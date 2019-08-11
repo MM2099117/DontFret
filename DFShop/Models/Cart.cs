@@ -24,6 +24,11 @@ namespace DFShop.Models
         string CartID { get; set; }
 
         /// <summary>
+        /// User ID property for sessions
+        /// </summary>
+        string Username { get; set; }
+
+        /// <summary>
         /// Session Key for keeping cart active
         /// </summary>
         public const string SessionKey = "CartID";
@@ -71,26 +76,44 @@ namespace DFShop.Models
         {
             var CartEntry = db.ShoppingCarts.SingleOrDefault(p => p.ShoppingCartID == CartID && p.ProductID == product.ProductID);
 
+            string errorMsg = product.ErrorMessage;
+            errorMsg = "";
             ///if no valid entry
             if (CartEntry == null)
-            {
-                ///create new cart with the current product as an entry
-                CartEntry = new ShoppingCart
-                {
-                    ProductID = product.ProductID,
-                    ShoppingCartID = CartID,
-                    Count = 1,
-                    DateCreated = DateTime.Now
-                };
-                ///update database
-                db.ShoppingCarts.Add(CartEntry);
-            }
-            else
-            {
-                ///else add 1 to the count of cart entries
-                CartEntry.Count++;
-            }
+            {        
+                   ///create new cart with the current product as an entry
+                    CartEntry = new ShoppingCart
+                    {
+                        ProductID = product.ProductID,
+                        ShoppingCartID = CartID,
+                        Count = 1,
+                        DateCreated = DateTime.Now
+                    };
 
+                ///check stock level
+                if (CartEntry.ProductQuantity <= product.StockLevel)
+                {
+                    ///updates the product stock
+                    Product p = db.Products.Where(s => s.ProductID == CartEntry.ProductID).First();
+                    int stock = p.StockLevel;
+                    int orderQuantity = CartEntry.ProductQuantity;
+                    p.StockLevel = stock - orderQuantity;
+                    db.SaveChanges();
+                    ///update database
+                    db.ShoppingCarts.Add(CartEntry);
+                }
+                else
+                {
+                    errorMsg = "Insufficient Stock";
+                }
+                    
+                }
+                else
+                {
+                    ///else add 1 to the count of cart entries
+                    CartEntry.Count++;
+                }
+            
             ///updates the database
             db.SaveChanges();
         }
@@ -115,6 +138,12 @@ namespace DFShop.Models
                     ///remove one from the entry count
                     CartEntries.Count--;
                     EntryCount = CartEntries.Count;
+
+                    ///updates the product stock
+                    Product p = db.Products.Where(s => s.ProductID == CartEntries.ProductID).First();
+                    int stock = p.StockLevel;
+                    int orderQuantity = CartEntries.ProductQuantity;
+                    p.StockLevel = stock - orderQuantity;
                 }
                 else
                 {
@@ -135,7 +164,6 @@ namespace DFShop.Models
         {
             ///gets the current Cart
             var CartEntries = db.ShoppingCarts.Where(c => c.ShoppingCartID == CartID);
-            
 
             ///iterates through the cart and removes all entries
             foreach (var entry in CartEntries)
@@ -190,23 +218,30 @@ namespace DFShop.Models
             foreach (var entry in CartEntries)
             {
                 ///creates an orderdetail object comprised of each cart entry
-                var OrderDetail = new OrderDetail
+                var newOrder = new OrderDetail
                 {
                     ProductID = entry.ProductID,
                     OrderID = order.OrderId,
                     UnitPrice = entry.Product.Price,
                     Quantity = entry.Count
                 };
-
                 ///sets the order total to the total price of the products in the cart entry
                 OrderTotal += (entry.Count * entry.Product.Price);
 
                 ///adds the order detail to the database
-                db.OrderDetails.Add(OrderDetail);
+                db.OrderDetails.Add(newOrder);
+
+                ///updates the product stock
+                Product p = db.Products.Where(s => s.ProductID == newOrder.ProductID).First();
+                int stock = p.StockLevel;
+                int orderQuantity = newOrder.Quantity;
+                p.StockLevel = stock - orderQuantity;
+
             }
 
             ///sets the order total variable to the new order total value
             order.Total = OrderTotal;
+
 
             ///updates the database
             db.SaveChanges();

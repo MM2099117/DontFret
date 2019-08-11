@@ -25,10 +25,12 @@ namespace DFShop.Models
 
         [Required(ErrorMessage = "Address required")]
         [StringLength(70)]
+        [DisplayName("Address Line 1")]
         public string AddressLine1 { get; set; }
 
         [Required(ErrorMessage = "Address required")]
         [StringLength(70)]
+        [DisplayName("Address Line 2")]
         public string AddressLine2 { get; set; }
 
         [Required(ErrorMessage = "Town required")]
@@ -42,6 +44,7 @@ namespace DFShop.Models
 
         [Required(ErrorMessage = "Mobile Number required")]
         [StringLength(24)]
+        [DisplayName("Contact Number")]
         public string ContactNumber { get; set; }
 
         [Required(ErrorMessage = "Email Address is required")]

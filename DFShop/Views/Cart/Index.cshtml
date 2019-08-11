@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Shopping Cart";
 }
-<script src="~/Scripts/jquery-3.3.1.min.js"
+<script src="~/Scripts/jquery-3.4.1.min.js"
         type="text/javascript"></script>
 <script type="text/javascript">$(function () {
         $(".RemoveLink").click(function () {
@@ -11,20 +11,23 @@
             if (recordToDelete != '') {
                 $.post("/Cart/RemoveEntry", {"id": recordToDelete },
                     function (data) {
-                        if (data.CartCount == 0) {
+                        if (data.ShoppingCartCount == 0) {
                             $('#row-' + data.DeleteId).fadeOut('slow');
                         } else {
                             $('#item-count-' + data.DeleteId).text(data.ItemCount);
                         }
-                        $('#cart-total').text(data.CartTotal);
+                        $('#cart-total').text(data.ShoppingCartTotal);
                         $('#update-message').text(data.Message);
-                        $('#cart-status').text('Cart (' + data.CartCount + ')');
+                        $('#cart-status').text('Cart (' + data.ShoppingCartCount + ')');
                     });
             }
         });
     });</script>
 <h3>
     <em>Review</em> your cart:
+    <button class="btn-dark">
+        @Html.ActionLink("Checkout", "PaymentForm", "Checkout")
+    </button>
 </h3>
 <div id="update-message">
 </div>
@@ -74,3 +77,4 @@
         </td>
     </tr>
 </table>
+<text>@Html.DisplayTextFor(model => model.ErrorMessage)</text>

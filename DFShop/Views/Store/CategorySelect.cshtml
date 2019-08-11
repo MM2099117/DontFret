@@ -1,0 +1,11 @@
+﻿@model IEnumerable<DFShop.Models.Category>
+
+    <div class="dropdown-menu" aria-labelledby="category-select">
+        @foreach (var category in Model)
+        {
+            <a class="dropdown-item" href="#">
+                @Html.ActionLink(category.CategoryName, "Browse", "Store", new { category = category.CategoryName }, null)
+                </a>
+            }
+
+        </div>

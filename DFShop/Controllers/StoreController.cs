@@ -22,6 +22,17 @@ namespace DFShop.Controllers
         }
 
         /// <summary>
+        /// Sub-menu to select product categories
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
+        public ActionResult CategorySelect()
+        {
+            var categorySelection = db.Categories.ToList();
+            return PartialView(categorySelection);
+        }
+
+        /// <summary>
         /// Controller Function for browsing products + santizing category selection
         /// </summary>
         /// <param name="category"></param>

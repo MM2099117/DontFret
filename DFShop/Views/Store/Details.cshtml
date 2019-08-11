@@ -8,7 +8,7 @@
 <h2>@Model.ProductName</h2>
 <p>
     <img alt="@Model.ProductName"
-         src="@Model.ImagePath" />
+         src="@Url.Content(Model.ImagePath)" width="250" height="250" multiple />
 </p>
 <div id="item-details">
     <p>
@@ -23,10 +23,11 @@
         <em>Price:</em>
         @String.Format("{0:F}", Model.Price)
     </p>
-    <p class="button1">
+    <button class="btn-dark">
         @Html.ActionLink("Add To Cart", "AddToCart",
         "Cart", new { productID = Model.ProductID }, "")
-    </p>
+    </button>
+    <text>@Html.DisplayTextFor(model => model.ErrorMessage)</text>
     <div class="fb-comments" data-width="230" data-numposts="5"></div>
 </div>
 

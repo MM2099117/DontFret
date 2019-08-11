@@ -10,7 +10,7 @@ using DFShop.Models;
 
 namespace DFShop.Controllers
 {
-    [Authorize]
+    [Authorize (Roles = "Store Manager, Assistant Manager")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

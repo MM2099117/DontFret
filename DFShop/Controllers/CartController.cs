@@ -64,8 +64,8 @@ namespace DFShop.Controllers
             {
                 Message = Server.HtmlEncode(productName) +
                               " has been removed from your shopping cart.",
-                CartTotal = cart.GetCartTotal(),
-                CartCount = cart.GetCartCount(),
+                ShoppingCartTotal = cart.GetCartTotal(),
+                ShoppingCartCount = cart.GetCartCount(),
                 ItemCount = entryCount,
                 DeleteId = id
             };
@@ -73,6 +73,10 @@ namespace DFShop.Controllers
 
         }
 
+        /// <summary>
+        /// Shows the user how many times are currently in their cart in the navbar
+        /// </summary>
+        /// <returns>partial cart view</returns>
         [ChildActionOnly]
         public ActionResult GetCartSummary()
         {

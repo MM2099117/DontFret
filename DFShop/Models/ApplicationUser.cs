@@ -20,6 +20,7 @@ namespace DFShop.Models
         public string Postcode { get; set; }
         public string Town { get; set; }
         public string ContactNumber { get; set; }
+        public bool isLoyaltyCardHolder { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

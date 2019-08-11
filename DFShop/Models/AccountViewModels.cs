@@ -96,6 +96,10 @@ namespace DFShop.Models
         [Required]
         [Display(Name = "Mobile Number")]
         public string ContactNumber { get; set; }
+
+        [ScaffoldColumn(false)]
+        public bool isLoyaltyCardHolder { get; set; }
+
     }
 
     public class ResetPasswordViewModel

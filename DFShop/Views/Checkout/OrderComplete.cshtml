@@ -1,0 +1,17 @@
+﻿@model DFShop.Models.Order
+@using DFShop.Models
+
+@{
+    ViewBag.Title = "OrderComplete";
+}
+
+<h2>Order Complete!</h2>
+<p>Thank you for placing your order. Don't Fret, it'll be with you soon!</p>
+<p>ORDER REFERENCE: @Model.OrderId</p>
+<p>Would you like to @Html.ActionLink("Continue shopping?", "Index", "Store")</p>
+
+<h3>
+    <button class="btn-dark">
+        @Html.ActionLink("View Order Summary", "OrderSummary", new { id = Model.OrderId })
+    </button>
+</h3>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -51,8 +52,17 @@ namespace DFShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                ///sets a file name, date path and  extension for the product image
+                string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                string extension = Path.GetExtension(product.ImageFile.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                product.ImagePath = "~/Image/" + fileName;
+                ///saves the image in the declared path
+                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                product.ImageFile.SaveAs(fileName);
                 db.Products.Add(product);
                 db.SaveChanges();
+                ModelState.Clear();
                 return RedirectToAction("Index");
             }
 
@@ -85,8 +95,17 @@ namespace DFShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                ///sets a file name, date path and  extension for the product image
+                string fileName = Path.GetFileNameWithoutExtension(product.ImageFile.FileName);
+                string extension = Path.GetExtension(product.ImageFile.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                product.ImagePath = "~/Image/" + fileName;
+                ///saves the image in the declared path
+                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                product.ImageFile.SaveAs(fileName);
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
+                ModelState.Clear();
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
